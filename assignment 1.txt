@@ -1,0 +1,137 @@
+SECTION A :-
+
+	1)Ensure data integrity, prevent invalid data entry,
+	  enforce business rules, and improve query performance.
+
+	2)Uniquely identifies each record in a table and prevents
+	  duplicate and NULL values.
+
+	3)A PRIMARY KEY ensures uniqueness and does not allow NULL values,
+          whereas a UNIQUE key allows NULL values.
+
+	4)No, a PRIMARY KEY column must always have non-null unique values.
+
+	5)A FOREIGN KEY links one table to another by referencing a PRIMARY KEY.
+	  It can reference multiple tables using multiple FOREIGN KEYs.
+
+	6)Yes, if not defined with NOT NULL, a FOREIGN KEY can have NULL values.
+
+	7)A PRIMARY KEY uniquely identifies records, while a FOREIGN KEY
+	  enforces referential integrity by linking to another table.
+
+	8)Yes, multiple UNIQUE constraints can exist on a table. 
+	  Example: A table with columns email and phone_number, both having UNIQUE constraints.
+
+	9)Automatically assigns a specified value to a column if no value is provided.
+
+       10)Yes, this ensures that a column always has a value, either user-provided or default.
+
+SECTION B :- 
+	
+	1) CREATE TABLE category(category_id INT, category_name VARCHAR(20));
+	   INSERT INTO category(category_id, category_name) VALUES(1, 'Electronics'),
+								  (2, 'Books'),
+								  (3, 'Clothing'); 
+
+        // OUTPUTS :- mysql> SELECT * FROM category;
+				+-------------+---------------+
+				| category_id | category_name |
+				+-------------+---------------+
+				|           1 | Electronics   |
+				|           2 | Books         |
+				|           3 | Clothing      |
+				+-------------+---------------+
+				3 rows in set (0.00 sec)
+
+	2) CREATE TABLE EVENT(event_id INT, event_name VARCHAR(20), date DATE, location VARCHAR(20));
+	   INSERT INTO EVENT(event_id, event_name, date, location) VALUES(1, 'Conderence X', '2023-07-15', 'City Hall'),
+								  	 (2, 'Music Festival', '2023-08-22', 'Park Plaza'),
+								  	 (3, 'Tech Expo', '2023-09-10', 'Convention Center');
+	
+	// OUTPUTS :- mysql> SELECT * FROM EVENT;
+			+----------+----------------+------------+-------------------+
+			| event_id | event_name     | date       | location          |
+			+----------+----------------+------------+-------------------+
+			|        1 | Conderence X   | 2023-07-15 | City Hall         |
+			|        2 | Music Festival | 2023-08-22 | Park Plaza        |
+			|        3 | Tech Expo      | 2023-09-10 | Convention Center |
+			+----------+----------------+------------+-------------------+
+			3 rows in set (0.00 sec)
+
+	3) CREATE TABLE task(task_id INT ,task_description TEXT , due_date DATE);
+
+	   INSERT INTO task (task_id, task_description, due_date) VALUES(1, 'Complete project proposal', '2023-10-15'),
+									(2, 'Prepare for meeting with client', '2023-11-02'),
+									(3, 'Review and submit report', '2023-12-01');
+	
+	// OUTPUTS :- mysql> SELECT * FROM task;
+			+---------+---------------------------------+------------+
+			| task_id | task_description                | due_date   |
+			+---------+---------------------------------+------------+
+			|       1 | Complete project proposal       | 2023-10-15 |
+			|       2 | Prepare for meeting with client | 2023-11-02 |
+			|       3 | Review and submit report        | 2023-12-01 |
+			+---------+---------------------------------+------------+
+			3 rows in set (0.00 sec)
+
+	4)  	CREATE DATABASE bookshop;
+
+		USE bookshop;
+
+		CREATE TABLE Author(Author_ID INT PRIMARY KEY, Author_Name VARCHAR(50));
+
+		INSERT INTO Author(Author_ID, Author_Name) VALUES(1, 'J.K.Rowling'),
+								 (2, 'Stephen King'),
+								 (3, 'Harper Lee'),
+								 (4, 'Georgw Orwell');
+
+		CREATE TABLE Category(Categoty_ID INT PRIMARY KEY, Category_Name VARCHAR(50));
+
+		INSERT INTO Category(Categoty_ID, Category_Name) VALUES(1, 'Fantasy'),
+								 (2, 'Horror'),
+								 (3, 'Classics'),
+								 (4, 'Dystopian');
+
+		CREATE TABLE Book (Book_ID INT PRIMARY KEY, Title VARCHAR(100) NOT NULL, Author_ID INT, Category_ID INT,
+    		FOREIGN KEY (Author_ID) REFERENCES Author(Author_ID) ON DELETE CASCADE,
+    		FOREIGN KEY (Category_ID) REFERENCES Category(Categoty_ID) ON DELETE CASCADE);
+
+		INSERT INTO Book (Book_ID, Title, Author_ID, Category_ID) VALUES(101, 'Harry Potter and the Philosopher\'s Stone', 1, 1),
+										(102, 'The Shining', 2, 2),
+										(103, 'To Kill a Mockingbird', 3, 3),
+										(104, '1984', 4, 4);
+
+		// OUTPUTS :- 	mysql> SELECT * FROM Author;
+				+-----------+---------------+
+				| Author_ID | Author_Name   |
+				+-----------+---------------+
+				|         1 | J.K.Rowling   |
+				|         2 | Stephen King  |
+				|         3 | Harper Lee    |
+				|         4 | Georgw Orwell |
+				+-----------+---------------+
+				4 rows in set (0.00 sec)
+
+				mysql> SELECT * FROM Category;
+				+-------------+---------------+
+				| Categoty_ID | Category_Name |
+				+-------------+---------------+
+				|           1 | Fantasy       |
+				|           2 | Horror        |
+				|           3 | Classics      |
+				|           4 | Dystopian     |
+				+-------------+---------------+
+				4 rows in set (0.00 sec)
+
+				mysql> SELECT * FROM Book;
+				+---------+------------------------------------------+-----------+-------------+
+				| Book_ID | Title                                    | Author_ID | Category_ID |
+				+---------+------------------------------------------+-----------+-------------+
+				|     101 | Harry Potter and the Philosopher's Stone |         1 |           1 |
+				|     102 | The Shining                              |         2 |           2 |
+				|     103 | To Kill a Mockingbird                    |         3 |           3 |
+				|     104 | 1984                                     |         4 |           4 |
+				+---------+------------------------------------------+-----------+-------------+
+				4 rows in set (0.00 sec)
+
+
